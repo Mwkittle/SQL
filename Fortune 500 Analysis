@@ -1,0 +1,30 @@
+Select *
+From fortune_companies;
+
+#which companies have high, moderate, and low maternity leave.
+Select company_name, industry,
+Case When maternity_leave_weeks >= 10 Then "High Leave"
+When maternity_leave_weeks >= 8 Then "Moderate Leave"
+Else "Low Leave"
+End As Maternity_Leave_Quality
+From fortune_companies
+Order by maternity_leave_weeks desc;
+
+#Companies with average employees over 5000 and include healthcare.
+Select company_name, Avg(employees) as avg_employees, healthcare_benefits 
+From fortune_companies
+Group BY company_name
+Having avg_employees >=5000
+Order by avg_employees desc;
+
+#Companies that have the highest revenue and offer the best benefits
+Select *
+From fortune_companies
+Where healthcare_benefits =1
+and paid_time_off_days >=20
+and revenue >=300;
+
+#Which company in the Energy industry has the lowest revenue.
+Select company_name, Min(revenue)
+From fortune_companies
+Where industry = "Energy";
